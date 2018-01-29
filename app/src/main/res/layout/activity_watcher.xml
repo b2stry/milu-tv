@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.shallowan.milutv.widget.SizeChangeRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/size_change_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.shallowan.milutv.hostlive.HostLiveActivity">
+
+
+    <com.tencent.ilivesdk.view.AVRootView
+        android:id="@+id/live_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white" />
+
+    <com.shallowan.milutv.view.TitleView
+        android:id="@+id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:id="@+id/bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <com.shallowan.milutv.view.BottomControlView
+            android:id="@+id/control_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.shallowan.milutv.view.ChatView
+            android:id="@+id/chat_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/chat_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_view"
+        android:orientation="horizontal">
+
+        <com.shallowan.milutv.view.ChatMsgListView
+            android:id="@+id/chat_list"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_weight="2" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <com.shallowan.milutv.view.VipEnterView
+        android:id="@+id/vip_enter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/chat_list_view" />
+
+    <tyrantgit.widget.HeartLayout
+        android:id="@+id/heart_layout"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true" />
+
+    <com.shallowan.milutv.view.DanmuView
+        android:id="@+id/danmu_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/chat_list_view" />
+
+    <com.shallowan.milutv.view.GiftRepeatView
+        android:id="@+id/gift_repeat_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@id/vip_enter" />
+
+    <com.shallowan.milutv.view.GiftFullView
+        android:id="@+id/gift_full_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</com.shallowan.milutv.widget.SizeChangeRelativeLayout>
