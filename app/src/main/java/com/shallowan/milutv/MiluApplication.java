@@ -1,4 +1,4 @@
-package com.shallowan.milutv;
+﻿package com.shallowan.milutv;
 
 import android.app.Application;
 import android.content.Context;
@@ -22,8 +22,8 @@ import java.util.List;
 
 public class MiluApplication extends Application {
 
-    private int mAppId = 1400026811;
-    private int mAccountType = 11334;
+    private int mAppId = xxxxxxxx;
+    private int mAccountType = xxxxxx;
 
     private static MiluApplication app;
     private static Context appContext;
@@ -50,15 +50,11 @@ public class MiluApplication extends Application {
         mLiveConfig = new ILVLiveConfig();
         ILVLiveManager.getInstance().init(mLiveConfig);
 
-        QnUploadHelper.init("5Mc0xmrliATfOKKKhp9lbk2hPn2fnY6B_ofUkgy_",
-                "IMpjuVzg7PBolgB9CDzdZwfPpgY_lcMXUCQDNKfF",
+        QnUploadHelper.init("xxxxxxx",
+                "xxxxxxxx",
                 "http://p16xf7hup.bkt.clouddn.com/",
                 "shallowan");
 
-//        QnUploadHelper.init("fywLTKHt3JUahQrTPSFrKRt27FjWTBV6Yn8CQFWe",
-//                "00nzSVpO5yURyMxpPkOP_9shEtnGYDbGJxMavzdL",
-//                "http://oe0i3jf0i.bkt.clouddn.com/",
-//                "imooc");
         LeakCanary.install(this);
 
     }
