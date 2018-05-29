@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
 
 public class TitleView extends LinearLayout {

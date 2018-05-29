@@ -16,10 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * Created by ShallowAn.
+ */
+
 public class MiluApplication extends Application {
 
-    private int mAppId = 0;
-    private int mAccountType = 0;
+    private int mAppId = 1400026811;
+    private int mAccountType = 11334;
 
     private static MiluApplication app;
     private static Context appContext;
@@ -33,7 +37,7 @@ public class MiluApplication extends Application {
         super.onCreate();
         app = this;
         appContext = getApplicationContext();
-        ILiveSDK.getInstance().initSdk(getApplicationContext(),  mAppId , mAccountType);
+        ILiveSDK.getInstance().initSdk(getApplicationContext(), mAppId, mAccountType);
         List<String> customInfos = new ArrayList<>();
         customInfos.add(CustomProfile.CUSTOM_GET);
         customInfos.add(CustomProfile.CUSTOM_SEND);
@@ -46,9 +50,17 @@ public class MiluApplication extends Application {
         mLiveConfig = new ILVLiveConfig();
         ILVLiveManager.getInstance().init(mLiveConfig);
 
-        QnUploadHelper.init("", "", "", "");
+        QnUploadHelper.init("5Mc0xmrliATfOKKKhp9lbk2hPn2fnY6B_ofUkgy_",
+                "IMpjuVzg7PBolgB9CDzdZwfPpgY_lcMXUCQDNKfF",
+                "http://p16xf7hup.bkt.clouddn.com/",
+                "shallowan");
 
+//        QnUploadHelper.init("fywLTKHt3JUahQrTPSFrKRt27FjWTBV6Yn8CQFWe",
+//                "00nzSVpO5yURyMxpPkOP_9shEtnGYDbGJxMavzdL",
+//                "http://oe0i3jf0i.bkt.clouddn.com/",
+//                "imooc");
         LeakCanary.install(this);
+
     }
 
     public static Context getContext() {

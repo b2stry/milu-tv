@@ -2,9 +2,11 @@ package com.shallowan.milutv.model;
 
 import com.tencent.livesdk.ILVLiveConstants;
 
+
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
+
 
 public class Constants {
 

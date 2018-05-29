@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,24 +21,29 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sdsmdg.tastytoast.TastyToast;
 import com.shallowan.milutv.R;
+import com.shallowan.milutv.createroom.CreateLiveActivity;
 import com.shallowan.milutv.model.RoomInfo;
 import com.shallowan.milutv.utils.ImgUtils;
-import com.shallowan.milutv.utils.request.BaseRequest;
 import com.shallowan.milutv.watcher.WatcherActivity;
+import com.shallowan.milutv.utils.request.BaseRequest;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
+
 
 public class LiveListFragment extends Fragment {
 
     private ListView mLiveListView;
     private LiveListAdapter mLiveListAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private FloatingActionButton floatingActionButton;
 
     @Nullable
     @Override
@@ -51,21 +58,24 @@ public class LiveListFragment extends Fragment {
     }
 
     private void requestLiveList() {
-        //请求前20个数据
+        //请求前10个数据
         GetLiveListRequest liveListRequest = new GetLiveListRequest();
         liveListRequest.setOnResultListener(new BaseRequest.OnResultListener<List<RoomInfo>>() {
             @Override
             public void onSuccess(List<RoomInfo> roomInfos) {
-
                 mLiveListAdapter.removeAllRoomInfos();//下拉刷新，先移除掉之前的room信息
-                mLiveListAdapter.addRoomInfos(roomInfos);//再添加新的信息
-
+                if (roomInfos.size() == 0) {
+                    TastyToast.makeText(getActivity().getApplicationContext(), "当前没有主播开播~", TastyToast.LENGTH_LONG, TastyToast.INFO);
+                } else {
+                    mLiveListAdapter.addRoomInfos(roomInfos);//再添加新的信息
+                }
                 mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFail(int code, String msg) {
-                Toast.makeText(getActivity(), "请求列表失败：" + msg, Toast.LENGTH_SHORT).show();
+                TastyToast.makeText(getActivity().getApplicationContext(), "请求列表失败：" + msg, TastyToast.LENGTH_LONG, TastyToast.ERROR);
+
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -77,10 +87,11 @@ public class LiveListFragment extends Fragment {
 
     private void findAllViews(View view) {
 
-        Toolbar titlebar = (Toolbar) view.findViewById(R.id.titlebar);
-        titlebar.setTitle("热播列表");
+        Toolbar titlebar = view.findViewById(R.id.titlebar);
+        titlebar.setTitle("最新直播");
         titlebar.setTitleTextColor(Color.WHITE);
         ((AppCompatActivity) getActivity()).setSupportActionBar(titlebar);
+
 
         mLiveListView = (ListView) view.findViewById(R.id.live_list);
         mLiveListAdapter = new LiveListAdapter(getContext());
@@ -92,6 +103,15 @@ public class LiveListFragment extends Fragment {
             public void onRefresh() {
                 //请求服务器，获取直播列表
                 requestLiveList();
+            }
+        });
+
+        floatingActionButton = view.findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreateLiveActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -182,11 +202,8 @@ public class LiveListFragment extends Fragment {
                     this.liveTitle.setText(liveTitleStr);
                 }
                 String url = roomInfo.liveCover;
-                if (TextUtils.isEmpty(url)) {
-                    ImgUtils.load(R.drawable.default_cover, liveCover);
-                } else {
-                    ImgUtils.load(url, liveCover);
-                }
+
+                ImgUtils.load(R.drawable.default_cover, liveCover);
 
                 String avatar = roomInfo.userAvatar;
                 if (TextUtils.isEmpty(avatar)) {

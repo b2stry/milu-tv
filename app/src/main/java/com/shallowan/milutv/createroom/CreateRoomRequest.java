@@ -1,17 +1,19 @@
 package com.shallowan.milutv.createroom;
 
-import com.shallowan.milutv.ResponseObject;
-import com.shallowan.milutv.utils.request.BaseRequest;
-
 import java.io.IOException;
 
+import com.shallowan.milutv.utils.response.ResponseObject;
+import com.shallowan.milutv.utils.request.BaseRequest;
+
+
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
+
 
 public class CreateRoomRequest extends BaseRequest {
 
-    private static final String Action = "http://imoocbearlive.butterfly.mopaasapp.com/roomServlet?action=create";
+    private static final String Action = "http://47.93.242.254:8080/create";
 
     private static final String RequestParamKey_UserId = "userId";
     private static final String RequestParamKey_UserAvatar = "userAvatar";
@@ -29,7 +31,7 @@ public class CreateRoomRequest extends BaseRequest {
 
     public String getUrl(CreateRoomParam param) {
         return Action
-                + "&" + RequestParamKey_UserId + "=" + param.userId
+                + "?" + RequestParamKey_UserId + "=" + param.userId
                 + "&" + RequestParamKey_UserAvatar + "=" + param.userAvatar
                 + "&" + RequestParamKey_UserName + "=" + param.userName
                 + "&" + RequestParamKey_LiveTitle + "=" + param.liveTitle

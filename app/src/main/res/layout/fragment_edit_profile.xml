@@ -24,8 +24,9 @@
                 android:id="@+id/avatar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
                 android:gravity="center_vertical"
-                android:minHeight="50dp"
+                android:minHeight="60dp"
                 android:orientation="horizontal"
                 android:padding="5dp">
 
@@ -46,7 +47,7 @@
                     android:id="@+id/avatar_img"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginLeft="2dp" />
             </LinearLayout>
 
             <com.shallowan.milutv.editprofile.ProfileEdit
@@ -61,16 +62,6 @@
 
             <com.shallowan.milutv.editprofile.ProfileEdit
                 android:id="@+id/sign"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.shallowan.milutv.editprofile.ProfileEdit
-                android:id="@+id/renzheng"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.shallowan.milutv.editprofile.ProfileEdit
-                android:id="@+id/location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -110,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:background="@drawable/btn_bkg_orange_rect_round"
-                android:text="退出"
+                android:text="退出登录"
                 android:textColor="@android:color/holo_red_dark" />
         </LinearLayout>
     </ScrollView>

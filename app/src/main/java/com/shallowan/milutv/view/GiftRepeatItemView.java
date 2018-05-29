@@ -16,7 +16,7 @@ import com.shallowan.milutv.utils.ImgUtils;
 import com.tencent.TIMUserProfile;
 
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
 
 public class GiftRepeatItemView extends LinearLayout {

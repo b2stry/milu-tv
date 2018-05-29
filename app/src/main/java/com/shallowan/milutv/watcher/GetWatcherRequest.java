@@ -1,21 +1,21 @@
 package com.shallowan.milutv.watcher;
 
-import com.shallowan.milutv.ResponseObject;
+import com.shallowan.milutv.utils.response.ResponseObject;
 import com.shallowan.milutv.utils.request.BaseRequest;
 
 import java.io.IOException;
 
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
 
 public class GetWatcherRequest extends BaseRequest {
-    private static final String HOST = "http://imoocbearlive.butterfly.mopaasapp.com/roomServlet?action=getWatcher";
+    private static final String HOST = "http://47.93.242.254:8080/getWatcher";
 
 
 
     public String getUrl(String roomId) {
-        return HOST + "&=roomId" + roomId;
+        return HOST + "?roomId=" + roomId;
     }
 
     @Override

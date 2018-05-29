@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import com.shallowan.milutv.R;
 
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
 
 public class BottomControlView extends RelativeLayout {

@@ -14,6 +14,10 @@ import com.shallowan.milutv.R;
 
 import static com.shallowan.milutv.R.id.webview;
 
+/**
+ * Created by ShallowAn.
+ */
+
 public class WebViewActivity extends AppCompatActivity {
     private Toolbar mWVTitlebar;
     private WebView mWebView;

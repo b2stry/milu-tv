@@ -1,22 +1,23 @@
 package com.shallowan.milutv.livelist;
 
-import com.shallowan.milutv.ResponseObject;
+import com.shallowan.milutv.utils.response.ResponseObject;
 import com.shallowan.milutv.utils.request.BaseRequest;
 
 import java.io.IOException;
 
+
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
 
 public class GetLiveListRequest extends BaseRequest {
-    private static final String HOST = "http://imoocbearlive.butterfly.mopaasapp.com/roomServlet?action=getList";
+    private static final String HOST = "http://47.93.242.254:8080/getList";
 
     public static class LiveListParam {
         public int pageIndex;
 
         public String toUrlParam() {
-            return "&=pageIndex" + pageIndex;
+            return "?pageIndex=" + pageIndex;
         }
     }
 
@@ -26,7 +27,7 @@ public class GetLiveListRequest extends BaseRequest {
 
     @Override
     protected void onFail(IOException e) {
-        sendFailMsg(-100,e.toString());
+        sendFailMsg(-100, e.toString());
     }
 
     @Override
@@ -46,7 +47,7 @@ public class GetLiveListRequest extends BaseRequest {
 
     @Override
     protected void onResponseFail(int code) {
-        sendFailMsg(code,"服务器异常");
+        sendFailMsg(code, "服务器异常");
     }
 
 }

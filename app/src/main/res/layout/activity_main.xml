@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -13,9 +14,29 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
+
+    <!--<com.luseen.spacenavigation.SpaceNavigationView-->
+    <!--android:id="@+id/space"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_gravity="bottom"-->
+    <!--app:active_item_color="#6A5ACD"-->
+    <!--app:centre_button_color="#6A5ACD"-->
+    <!--app:centre_button_icon="@drawable/tab_publish_live"-->
+    <!--app:inactive_item_color="@color/white"-->
+    <!--app:space_background_color="@color/colorPrimaryDark"-->
+    <!--app:space_item_icon_size="26dp" />-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/SlateGray" />
+
+
     <android.support.v4.app.FragmentTabHost
         android:id="@+id/fragment_tabhost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:background="@color/white" />
+
 </LinearLayout>

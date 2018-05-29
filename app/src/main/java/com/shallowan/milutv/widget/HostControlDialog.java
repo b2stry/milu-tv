@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import com.shallowan.milutv.R;
 
+
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
+
 public class HostControlDialog extends TransParentNoDimDialog {
 
 

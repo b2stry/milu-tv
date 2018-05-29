@@ -2,9 +2,11 @@ package com.shallowan.milutv.model;
 
 import com.shallowan.milutv.R;
 
+
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
+
 
 public class GiftInfo {
 

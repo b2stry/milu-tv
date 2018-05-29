@@ -48,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -65,8 +66,8 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:hint="请输入直播的标题"
-                android:lines="1"
-                android:maxLength="32"
+                android:lines="4"
+                android:maxLength="48"
                 android:padding="10dp"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -82,7 +83,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="房间号"
+                android:text=""
                 android:textSize="18sp" />
 
             <TextView

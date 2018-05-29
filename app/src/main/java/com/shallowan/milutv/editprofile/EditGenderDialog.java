@@ -10,6 +10,10 @@ import com.shallowan.milutv.R;
 import com.shallowan.milutv.widget.TransParentDialog;
 
 
+/**
+ * Created by ShallowAn.
+ */
+
 public class EditGenderDialog extends TransParentDialog {
     private RadioButton maleView;
     private RadioButton femaleView;

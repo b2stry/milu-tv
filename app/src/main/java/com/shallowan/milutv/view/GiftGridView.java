@@ -20,7 +20,7 @@ import java.util.List;
 import static com.shallowan.milutv.model.GiftInfo.Gift_Empty;
 
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
 
 public class GiftGridView extends GridView {

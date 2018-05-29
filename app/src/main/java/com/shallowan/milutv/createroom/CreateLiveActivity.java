@@ -6,12 +6,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.sdsmdg.tastytoast.TastyToast;
 import com.shallowan.milutv.MiluApplication;
 import com.shallowan.milutv.R;
 import com.shallowan.milutv.hostlive.HostLiveActivity;
@@ -21,13 +22,23 @@ import com.shallowan.milutv.utils.PicChooserHelper;
 import com.shallowan.milutv.utils.request.BaseRequest;
 import com.tencent.TIMUserProfile;
 
+/**
+ * Created by ShallowAn.
+ */
+
 public class CreateLiveActivity extends AppCompatActivity {
-    private View mSetCoverView;
-    private ImageView mCoverImg;
-    private TextView mCoverTipTxt;
-    private EditText mTitleEt;
-    private TextView mCreateRoomBtn;
-    private TextView mRoomNoText;
+
+    public View mSetCoverView;
+
+    public ImageView mCoverImg;
+
+    public TextView mCoverTipTxt;
+
+    public EditText mTitleEt;
+
+    public TextView mCreateRoomBtn;
+
+    public TextView mRoomNoText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +59,7 @@ public class CreateLiveActivity extends AppCompatActivity {
         mRoomNoText = (TextView) findViewById(R.id.room_no);
     }
 
+
     private void setListeners() {
         mSetCoverView.setOnClickListener(clickListener);
         mCreateRoomBtn.setOnClickListener(clickListener);
@@ -67,6 +79,7 @@ public class CreateLiveActivity extends AppCompatActivity {
         });
     }
 
+
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -74,7 +87,8 @@ public class CreateLiveActivity extends AppCompatActivity {
             if (id == R.id.create) {
                 //创建直播
                 if (mTitleEt.getText().toString().equals("")) {
-                    Toast.makeText(CreateLiveActivity.this,"请输入一个标题！",Toast.LENGTH_SHORT).show();
+                    TastyToast.makeText(getApplicationContext(), "请输入一个标题！", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+
                 } else {
                     requestCreateRoom();
                 }
@@ -99,17 +113,17 @@ public class CreateLiveActivity extends AppCompatActivity {
         request.setOnResultListener(new BaseRequest.OnResultListener<RoomInfo>() {
             @Override
             public void onFail(int code, String msg) {
-                Toast.makeText(CreateLiveActivity.this, "请求失败：" + msg, Toast.LENGTH_SHORT).show();
+                TastyToast.makeText(getApplicationContext(), "请求失败：" + msg, TastyToast.LENGTH_LONG, TastyToast.ERROR);
+
             }
 
             @Override
             public void onSuccess(RoomInfo roomInfo) {
-                Toast.makeText(CreateLiveActivity.this, "当前房间号为：" + roomInfo.roomId, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
                 intent.setClass(CreateLiveActivity.this, HostLiveActivity.class);
                 intent.putExtra("roomId", roomInfo.roomId);
+                Log.i("roomid", roomInfo.roomId + "");
                 startActivity(intent);
-
                 finish();
             }
         });
@@ -135,7 +149,8 @@ public class CreateLiveActivity extends AppCompatActivity {
                 @Override
                 public void onFail(String msg) {
                     //获取图片失败
-                    Toast.makeText(CreateLiveActivity.this, "选择失败：" + msg, Toast.LENGTH_SHORT).show();
+                    TastyToast.makeText(getApplicationContext(), "选择失败：" + msg, TastyToast.LENGTH_LONG, TastyToast.ERROR);
+
                 }
             });
         }
@@ -158,4 +173,6 @@ public class CreateLiveActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+
 }

@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.sdsmdg.tastytoast.TastyToast;
 import com.shallowan.milutv.R;
 import com.shallowan.milutv.login.LoginActivity;
 import com.shallowan.milutv.main.MainActivity;
@@ -27,11 +28,19 @@ import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
 
+import net.lemonsoft.lemonhello.LemonHello;
+import net.lemonsoft.lemonhello.LemonHelloAction;
+import net.lemonsoft.lemonhello.LemonHelloInfo;
+import net.lemonsoft.lemonhello.LemonHelloView;
+import net.lemonsoft.lemonhello.interfaces.LemonHelloActionDelegate;
+
 import java.util.Map;
 
+
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
+
 
 public class EditProfileFragment extends Fragment {
 
@@ -46,8 +55,6 @@ public class EditProfileFragment extends Fragment {
     private ProfileEdit mNickNameEdt;
     private ProfileEdit mGenderEdt;
     private ProfileEdit mSignEdt;
-    private ProfileEdit mRenzhengEdt;
-    private ProfileEdit mLocationEdt;
 
     private ProfileTextView mIdView;
     private ProfileTextView mLevelView;
@@ -101,11 +108,9 @@ public class EditProfileFragment extends Fragment {
         String genderStr = genderValue == 1 ? "男" : "女";
         mGenderEdt.updateValue(genderStr);
         mSignEdt.updateValue(timUserProfile.getSelfSignature());
-        mLocationEdt.updateValue(timUserProfile.getLocation());
         mIdView.updateValue(timUserProfile.getIdentifier());
 
         Map<String, byte[]> customInfo = timUserProfile.getCustomInfo();
-        mRenzhengEdt.updateValue(getValue(customInfo, CustomProfile.CUSTOM_RENZHENG, "未知"));
         mLevelView.updateValue(getValue(customInfo, CustomProfile.CUSTOM_LEVEL, "0"));
         mGetNumsView.updateValue(getValue(customInfo, CustomProfile.CUSTOM_GET, "0"));
         mSendNumsView.updateValue(getValue(customInfo, CustomProfile.CUSTOM_SEND, "0"));
@@ -124,9 +129,7 @@ public class EditProfileFragment extends Fragment {
     private void setIconKey() {
         mNickNameEdt.set(R.drawable.ic_info_nickname, "昵称", "");
         mGenderEdt.set(R.drawable.ic_info_gender, "性别", "");
-        mSignEdt.set(R.drawable.ic_info_sign, "签名", "无");
-        mRenzhengEdt.set(R.drawable.ic_info_renzhen, "认证", "未知");
-        mLocationEdt.set(R.drawable.ic_info_location, "地区", "未知");
+        mSignEdt.set(R.drawable.ic_info_sign, "签名", "这个人很懒~还没有签名~");
         mIdView.set(R.drawable.ic_info_id, "ID", "");
         mLevelView.set(R.drawable.ic_info_level, "等级", "0");
         mGetNumsView.set(R.drawable.ic_info_get, "获得票数", "0");
@@ -141,8 +144,7 @@ public class EditProfileFragment extends Fragment {
         mNickNameEdt = (ProfileEdit) view.findViewById(R.id.nick_name);
         mGenderEdt = (ProfileEdit) view.findViewById(R.id.gender);
         mSignEdt = (ProfileEdit) view.findViewById(R.id.sign);
-        mRenzhengEdt = (ProfileEdit) view.findViewById(R.id.renzheng);
-        mLocationEdt = (ProfileEdit) view.findViewById(R.id.location);
+
 
         mIdView = (ProfileTextView) view.findViewById(R.id.id);
         mLevelView = (ProfileTextView) view.findViewById(R.id.level);
@@ -157,8 +159,6 @@ public class EditProfileFragment extends Fragment {
         mNickNameEdt.setOnClickListener(clickListener);
         mGenderEdt.setOnClickListener(clickListener);
         mSignEdt.setOnClickListener(clickListener);
-        mRenzhengEdt.setOnClickListener(clickListener);
-        mLocationEdt.setOnClickListener(clickListener);
         mCompleteBtn.setOnClickListener(clickListener);
     }
 
@@ -187,17 +187,27 @@ public class EditProfileFragment extends Fragment {
             } else if (id == R.id.sign) {
                 //修改签名
                 showEditSignDialog();
-            } else if (id == R.id.renzheng) {
-                //修改认证
-                showEditRenzhengDialog();
-            } else if (id == R.id.location) {
-                //修改位置
-                showEditLocationDialog();
             } else if (id == R.id.complete) {
-                //完成，点击跳转到主界面
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), LoginActivity.class);
-                startActivity(intent);
+                LemonHello.getInformationHello("您确定要注销吗？", "注销登录后您将无法接收到当前用户的所有推送消息。")
+                        .addAction(new LemonHelloAction("取消", new LemonHelloActionDelegate() {
+                            @Override
+                            public void onClick(LemonHelloView helloView, LemonHelloInfo helloInfo, LemonHelloAction helloAction) {
+                                helloView.hide();
+                            }
+                        }))
+                        .addAction(new LemonHelloAction("确定", Color.RED, new LemonHelloActionDelegate() {
+                            @Override
+                            public void onClick(LemonHelloView helloView, LemonHelloInfo helloInfo, LemonHelloAction helloAction) {
+                                helloView.hide();
+                                //完成，点击跳转到主界面
+                                Intent intent = new Intent();
+                                intent.setClass(getActivity(), LoginActivity.class);
+                                startActivity(intent);
+                                getActivity().finish();
+
+                            }
+                        }))
+                        .show(getActivity());
             }
         }
     };
@@ -213,34 +223,12 @@ public class EditProfileFragment extends Fragment {
 
                 @Override
                 public void onFail(String msg) {
-                    Toast.makeText(getActivity(), "选择失败：" + msg, Toast.LENGTH_SHORT).show();
+                    TastyToast.makeText(getActivity().getApplicationContext(), "选择失败：" + msg, TastyToast.LENGTH_SHORT, TastyToast.ERROR);
                 }
             });
         }
 
         mPicChooserHelper.showPicChooserDialog();
-    }
-
-    private void showEditLocationDialog() {
-        EditStrProfileDialog dialog = new EditStrProfileDialog(getActivity());
-        dialog.setOnOKListener(new EditStrProfileDialog.OnOKListener() {
-            @Override
-            public void onOk(String title, final String content) {
-                TIMFriendshipManager.getInstance().setLocation(content, new TIMCallBack() {
-                    @Override
-                    public void onError(int i, String s) {
-                        Toast.makeText(getActivity(), "更新地区失败：" + s, Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onSuccess() {
-                        //更新成功
-                        getSelfInfo();
-                    }
-                });
-            }
-        });
-        dialog.show("地区", R.drawable.ic_info_location, mLocationEdt.getValue());
     }
 
     private void showEditSignDialog() {
@@ -251,7 +239,7 @@ public class EditProfileFragment extends Fragment {
                 TIMFriendshipManager.getInstance().setSelfSignature(content, new TIMCallBack() {
                     @Override
                     public void onError(int i, String s) {
-                        Toast.makeText(getActivity(), "更新签名失败：" + s, Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(getActivity().getApplicationContext(), "更新签名失败：" + s, TastyToast.LENGTH_SHORT, TastyToast.ERROR);
                     }
 
                     @Override
@@ -275,7 +263,7 @@ public class EditProfileFragment extends Fragment {
 
                     @Override
                     public void onError(int i, String s) {
-                        Toast.makeText(getActivity(), "更新性别失败：" + s, Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(getActivity().getApplicationContext(), "更新性别失败：" + s, TastyToast.LENGTH_SHORT, TastyToast.ERROR);
                     }
 
                     @Override
@@ -289,27 +277,6 @@ public class EditProfileFragment extends Fragment {
         dialog.show(mGenderEdt.getValue().equals("男"));
     }
 
-    private void showEditRenzhengDialog() {
-        EditStrProfileDialog dialog = new EditStrProfileDialog(getActivity());
-        dialog.setOnOKListener(new EditStrProfileDialog.OnOKListener() {
-            @Override
-            public void onOk(String title, final String content) {
-                TIMFriendshipManager.getInstance().setCustomInfo(CustomProfile.CUSTOM_RENZHENG, content.getBytes(), new TIMCallBack() {
-                    @Override
-                    public void onError(int i, String s) {
-                        Toast.makeText(getActivity(), "更新认证失败：" + s, Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onSuccess() {
-                        //更新成功
-                        getSelfInfo();
-                    }
-                });
-            }
-        });
-        dialog.show("认证", R.drawable.ic_info_renzhen, mRenzhengEdt.getValue());
-    }
 
     private void showEditNickNameDialog() {
         EditStrProfileDialog dialog = new EditStrProfileDialog(getActivity());
@@ -319,7 +286,7 @@ public class EditProfileFragment extends Fragment {
                 TIMFriendshipManager.getInstance().setNickName(content, new TIMCallBack() {
                     @Override
                     public void onError(int i, String s) {
-                        Toast.makeText(getActivity(), "更新昵称失败：" + s, Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(getActivity().getApplicationContext(), "更新昵称失败：" + s, TastyToast.LENGTH_SHORT, TastyToast.ERROR);
                     }
 
                     @Override
@@ -350,7 +317,7 @@ public class EditProfileFragment extends Fragment {
 
             @Override
             public void onError(int i, String s) {
-                Toast.makeText(getActivity(), "头像更新失败：" + s, Toast.LENGTH_SHORT).show();
+                TastyToast.makeText(getActivity().getApplicationContext(), "更新头像失败：" + s, TastyToast.LENGTH_SHORT, TastyToast.ERROR);
             }
 
             @Override
@@ -360,6 +327,4 @@ public class EditProfileFragment extends Fragment {
             }
         });
     }
-
-
 }

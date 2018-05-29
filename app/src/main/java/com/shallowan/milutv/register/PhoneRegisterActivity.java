@@ -18,6 +18,10 @@ import com.shallowan.milutv.webview.WebViewActivity;
 import com.tencent.ilivesdk.ILiveCallBack;
 import com.tencent.ilivesdk.core.ILiveLoginManager;
 
+/**
+ * Created by ShallowAn.
+ */
+
 public class PhoneRegisterActivity extends AppCompatActivity {
     private Toolbar mTitlebar;
     private EditText mAccountEdt;

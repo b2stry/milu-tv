@@ -28,8 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
+
 
 public class GiftSelectDialog extends TransParentNoDimDialog {
 

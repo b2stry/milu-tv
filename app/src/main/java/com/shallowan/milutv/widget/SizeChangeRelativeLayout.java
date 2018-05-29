@@ -5,8 +5,9 @@ import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
+
 
 public class SizeChangeRelativeLayout extends RelativeLayout {
 

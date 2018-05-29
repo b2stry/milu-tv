@@ -1,22 +1,23 @@
 package com.shallowan.milutv.register;
 
-import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shallowan.milutv.R;
-import com.shallowan.milutv.webview.WebViewActivity;
 import com.tencent.ilivesdk.ILiveCallBack;
 import com.tencent.ilivesdk.core.ILiveLoginManager;
+
+/**
+ * Created by ShallowAn.
+ */
 
 public class ForgetActivity extends AppCompatActivity {
     private Toolbar mTitlebar;

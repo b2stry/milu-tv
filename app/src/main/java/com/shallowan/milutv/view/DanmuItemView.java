@@ -17,7 +17,7 @@ import com.shallowan.milutv.model.ChatMsgInfo;
 import com.shallowan.milutv.utils.ImgUtils;
 
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
 
 public class DanmuItemView extends RelativeLayout {

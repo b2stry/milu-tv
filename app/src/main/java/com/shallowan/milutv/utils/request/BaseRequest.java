@@ -15,11 +15,10 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by Administrator.
+ * Created by ShallowAn on 2018/4/10.
  */
 
 public abstract class BaseRequest {
-
     protected final int WHAT_FAIL = 0;
     protected final int WHAT_SUCC = 1;
 
@@ -94,5 +93,4 @@ public abstract class BaseRequest {
     protected abstract void onResponseFail(int code);
 
     protected abstract void onResponseSuccess(String body);
-
 }

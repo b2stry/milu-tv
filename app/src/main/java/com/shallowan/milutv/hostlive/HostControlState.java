@@ -2,9 +2,11 @@ package com.shallowan.milutv.hostlive;
 
 import com.tencent.ilivesdk.ILiveConstants;
 
+
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
+
 
 public class HostControlState {
 

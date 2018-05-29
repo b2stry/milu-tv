@@ -1,7 +1,8 @@
 package com.shallowan.milutv.model;
 
+
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
 
 public class GiftCmdInfo {

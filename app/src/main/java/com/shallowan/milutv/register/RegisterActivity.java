@@ -2,8 +2,8 @@ package com.shallowan.milutv.register;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,9 +12,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sdsmdg.tastytoast.TastyToast;
 import com.shallowan.milutv.MiluApplication;
 import com.shallowan.milutv.R;
-import com.shallowan.milutv.editprofile.EditProfileActivity;
 import com.shallowan.milutv.main.MainActivity;
 import com.shallowan.milutv.webview.WebViewActivity;
 import com.tencent.TIMFriendshipManager;
@@ -22,6 +22,10 @@ import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
 import com.tencent.ilivesdk.ILiveCallBack;
 import com.tencent.ilivesdk.core.ILiveLoginManager;
+
+/**
+ * Created by ShallowAn.
+ */
 
 public class RegisterActivity extends AppCompatActivity {
     private Toolbar mTitlebar;
@@ -91,17 +95,17 @@ public class RegisterActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(accountStr) ||
                 TextUtils.isEmpty(passwordStr) ||
                 TextUtils.isEmpty(confirmPswStr)) {
-            Toast.makeText(this, "账号或密码不能为空", Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(getApplicationContext(), "账号或密码不能为空", TastyToast.LENGTH_LONG, TastyToast.WARNING);
             return;
         }
 
         if (accountStr.length() < 8 || passwordStr.length() < 8 || confirmPswStr.length() < 8) {
-            Toast.makeText(this, "用户名或密码长度不够！", Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(getApplicationContext(), "用户名或密码长度不够", TastyToast.LENGTH_LONG, TastyToast.WARNING);
             return;
         }
 
         if (!passwordStr.equals(confirmPswStr)) {
-            Toast.makeText(this, "两次密码输入不一致", Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(getApplicationContext(), "两次密码输入不一致", TastyToast.LENGTH_LONG, TastyToast.WARNING);
             return;
         }
 
@@ -109,17 +113,17 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Object data) {
                 //注册成功
-                Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                TastyToast.makeText(getApplicationContext(), "注册成功", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                 //登录一下
                 login();
+
 
             }
 
             @Override
             public void onError(String module, int errCode, String errMsg) {
                 //注册失败
-                Toast.makeText(RegisterActivity.this, "注册失败：" + errMsg, Toast.LENGTH_SHORT).show();
-
+                TastyToast.makeText(getApplicationContext(), "注册失败：" + errMsg, TastyToast.LENGTH_LONG, TastyToast.ERROR);
             }
         });
     }
@@ -139,7 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onError(String module, int errCode, String errMsg) {
                 //登录失败
-                Toast.makeText(RegisterActivity.this, "tls登录失败：" + errMsg, Toast.LENGTH_SHORT).show();
+                TastyToast.makeText(getApplicationContext(), "tls登录失败：" + errMsg, TastyToast.LENGTH_LONG, TastyToast.ERROR);
             }
         });
     }
@@ -161,8 +165,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onError(String module, int errCode, String errMsg) {
                 //登录失败
-                Toast.makeText(RegisterActivity.this, "iLive登录失败：" + errMsg, Toast.LENGTH_SHORT).show();
-
+                TastyToast.makeText(getApplicationContext(), "iLive登录失败：" + errMsg, TastyToast.LENGTH_LONG, TastyToast.ERROR);
             }
         });
     }
@@ -171,7 +174,7 @@ public class RegisterActivity extends AppCompatActivity {
         TIMFriendshipManager.getInstance().getSelfProfile(new TIMValueCallBack<TIMUserProfile>() {
             @Override
             public void onError(int i, String s) {
-                Toast.makeText(RegisterActivity.this, "获取信息失败：" + s, Toast.LENGTH_SHORT).show();
+                TastyToast.makeText(getApplicationContext(), "获取信息失败：" + s, TastyToast.LENGTH_LONG, TastyToast.ERROR);
             }
 
             @Override

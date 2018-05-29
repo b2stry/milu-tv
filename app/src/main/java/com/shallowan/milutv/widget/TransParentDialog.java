@@ -9,8 +9,9 @@ import android.view.WindowManager;
 import com.shallowan.milutv.R;
 
 /**
- * Created by Administrator on 2017/4/3.
+ * Created by ShallowAn.
  */
+
 
 public class TransParentDialog {
     protected Activity activity;

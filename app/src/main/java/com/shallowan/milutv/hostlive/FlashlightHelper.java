@@ -5,9 +5,11 @@ import android.hardware.Camera;
 
 import com.tencent.ilivesdk.core.ILiveLoginManager;
 
+
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
+
 
 public class FlashlightHelper {
 

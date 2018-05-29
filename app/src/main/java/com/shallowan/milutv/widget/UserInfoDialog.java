@@ -15,7 +15,12 @@ import com.tencent.TIMUserProfile;
 
 import java.util.Map;
 
+/**
+ * Created by ShallowAn.
+ */
+
 public class UserInfoDialog extends TransParentDialog {
+
     private TIMUserProfile userInfo;
 
     private ImageView user_close;
@@ -63,6 +68,7 @@ public class UserInfoDialog extends TransParentDialog {
     private void bindDataToViews() {
 
         String avatarUrl = userInfo.getFaceUrl();
+
         if (!TextUtils.isEmpty(avatarUrl)) {
             ImgUtils.loadRound(R.drawable.default_avatar, user_avatar);
         } else {

@@ -18,8 +18,9 @@ import com.tencent.TIMUserProfile;
 import java.io.File;
 import java.io.IOException;
 
+
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
 
 public class PicChooserHelper {

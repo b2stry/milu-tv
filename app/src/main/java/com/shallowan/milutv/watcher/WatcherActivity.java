@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.sdsmdg.tastytoast.TastyToast;
 import com.shallowan.milutv.MiluApplication;
 import com.shallowan.milutv.R;
 import com.shallowan.milutv.hostlive.HeartBeatRequest;
@@ -50,6 +50,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import tyrantgit.widget.HeartLayout;
+
+/**
+ * Created by ShallowAn.
+ */
 
 public class WatcherActivity extends AppCompatActivity {
 
@@ -161,7 +165,7 @@ public class WatcherActivity extends AppCompatActivity {
 
             @Override
             public void onError(String module, int errCode, String errMsg) {
-                Toast.makeText(WatcherActivity.this,"直播已结束",Toast.LENGTH_SHORT).show();
+                TastyToast.makeText(getApplicationContext(), "直播已结束", TastyToast.LENGTH_LONG, TastyToast.ERROR);
                 quitRoom();
             }
         });
@@ -481,6 +485,5 @@ public class WatcherActivity extends AppCompatActivity {
 //        ILiveLoginManager.getInstance().iLiveLogout(null);
         finish();
     }
-
 
 }

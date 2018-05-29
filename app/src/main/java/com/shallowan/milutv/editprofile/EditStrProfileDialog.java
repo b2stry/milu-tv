@@ -11,7 +11,7 @@ import com.shallowan.milutv.R;
 import com.shallowan.milutv.widget.TransParentDialog;
 
 /**
- * Created by Administrator on 2017/4/3.
+ * Created by ShallowAn.
  */
 
 public class EditStrProfileDialog extends TransParentDialog {

@@ -4,10 +4,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.sdsmdg.tastytoast.TastyToast;
 import com.shallowan.milutv.MiluApplication;
 import com.shallowan.milutv.R;
 import com.shallowan.milutv.model.ChatMsgInfo;
@@ -45,6 +46,10 @@ import java.util.TimerTask;
 
 import tyrantgit.widget.HeartLayout;
 
+/**
+ * Created by ShallowAn.
+ */
+
 public class HostLiveActivity extends AppCompatActivity {
 
     private SizeChangeRelativeLayout mSizeChangeLayout;
@@ -74,7 +79,7 @@ public class HostLiveActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host_live);
-
+        Log.i("hostlive", "进入HOSTLIVE");
         findAllViews();
         createLive();
     }
@@ -146,13 +151,16 @@ public class HostLiveActivity extends AppCompatActivity {
         });
 
         //创建房间配置项
-        ILVLiveRoomOption hostOption = new ILVLiveRoomOption(ILiveLoginManager.getInstance().getMyUserId()).
-                controlRole("LiveMaster")//角色设置
-                .autoFocus(true)
-                .autoMic(hostControlState.isVoiceOn())
-                .authBits(AVRoomMulti.AUTH_BITS_DEFAULT)//权限设置
-                .cameraId(hostControlState.getCameraid())//摄像头前置后置
-                .videoRecvMode(AVRoomMulti.VIDEO_RECV_MODE_SEMI_AUTO_RECV_CAMERA_VIDEO);//是否开始半自动接收
+        ILVLiveRoomOption hostOption =
+                new ILVLiveRoomOption(
+                        ILiveLoginManager.getInstance()
+                                .getMyUserId())
+                        .controlRole("LiveMaster")//角色设置
+                        .autoFocus(true)
+                        .autoMic(hostControlState.isVoiceOn())
+                        .authBits(AVRoomMulti.AUTH_BITS_DEFAULT)//权限设置
+                        .cameraId(hostControlState.getCameraid())//摄像头前置后置
+                        .videoRecvMode(AVRoomMulti.VIDEO_RECV_MODE_SEMI_AUTO_RECV_CAMERA_VIDEO);//是否开始半自动接收
 
 
         //创建房间
@@ -168,7 +176,14 @@ public class HostLiveActivity extends AppCompatActivity {
             @Override
             public void onError(String module, int errCode, String errMsg) {
                 //失败的情况下，退出界面。
-                Toast.makeText(HostLiveActivity.this, "创建直播失败！", Toast.LENGTH_SHORT).show();
+                TastyToast.makeText(getApplicationContext(), "创建直播失败！" + errCode + "  " + errMsg, TastyToast.LENGTH_LONG, TastyToast.ERROR);
+
+                //发送退出消息给服务器
+                QuitRoomRequest request = new QuitRoomRequest();
+                String roomId = mRoomId + "";
+                String userId = MiluApplication.getApplication().getSelfProfile().getIdentifier();
+                String url = request.getUrl(roomId, userId);
+                request.request(url);
                 finish();
             }
         });
@@ -401,22 +416,25 @@ public class HostLiveActivity extends AppCompatActivity {
     }
 
     private void quitLive() {
-
         ILVCustomCmd customCmd = new ILVCustomCmd();
         customCmd.setType(ILVText.ILVTextType.eGroupMsg);
         customCmd.setCmd(ILVLiveConstants.ILVLIVE_CMD_LEAVE);
         customCmd.setDestId(ILiveRoomManager.getInstance().getIMGroupId());
+
         ILVLiveManager.getInstance().sendCustomCmd(customCmd, new ILiveCallBack() {
             @Override
             public void onSuccess(Object data) {
+                ILiveLoginManager.getInstance().iLiveLogout(null);
                 ILiveRoomManager.getInstance().quitRoom(new ILiveCallBack() {
                     @Override
                     public void onSuccess(Object data) {
+                        Log.i("HOSTLIVE", "成功");
                         logout();
                     }
 
                     @Override
                     public void onError(String module, int errCode, String errMsg) {
+                        Log.i("HOSTLIVE", errMsg);
                         logout();
                     }
                 });
@@ -424,20 +442,20 @@ public class HostLiveActivity extends AppCompatActivity {
 
             @Override
             public void onError(String module, int errCode, String errMsg) {
-
+                TastyToast.makeText(getApplicationContext(), errMsg, TastyToast.LENGTH_LONG, TastyToast.ERROR);
             }
         });
 
         //发送退出消息给服务器
         QuitRoomRequest request = new QuitRoomRequest();
-        String roomId = mRoomId +"";
+        String roomId = mRoomId + "";
         String userId = MiluApplication.getApplication().getSelfProfile().getIdentifier();
         String url = request.getUrl(roomId, userId);
         request.request(url);
     }
 
     private void logout() {
-//        ILiveLoginManager.getInstance().iLiveLogout(null);
+
         finish();
     }
 

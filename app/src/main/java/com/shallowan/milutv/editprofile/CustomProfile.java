@@ -3,6 +3,10 @@ package com.shallowan.milutv.editprofile;
 import com.tencent.TIMFriendshipManager;
 
 
+/**
+ * Created by ShallowAn.
+ */
+
 public class CustomProfile {
     //自定义字段
     private static final String PREFIX = "Tag_Profile_Custom_";

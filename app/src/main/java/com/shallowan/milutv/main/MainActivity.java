@@ -1,35 +1,87 @@
 package com.shallowan.milutv.main;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentTabHost;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTabHost;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TabHost;
-import android.widget.Toast;
 
+import com.luseen.spacenavigation.SpaceItem;
+import com.luseen.spacenavigation.SpaceNavigationView;
+import com.luseen.spacenavigation.SpaceOnClickListener;
+import com.lzy.widget.AlphaIndicator;
+import com.sdsmdg.tastytoast.TastyToast;
 import com.shallowan.milutv.R;
 import com.shallowan.milutv.createroom.CreateLiveActivity;
 import com.shallowan.milutv.editprofile.EditProfileFragment;
 import com.shallowan.milutv.livelist.LiveListFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by ShallowAn.
+ */
+
 public class MainActivity extends AppCompatActivity {
 
+    private long mExitTime;
+    private SpaceNavigationView spaceNavigationView;
+    private AlphaIndicator alphaIndicator;
     private FrameLayout mContainer;
     private FragmentTabHost mTabHost;
-    private long mExitTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         findAllViews();
         setTabs();
+
+        //replaceFragment(new LiveListFragment());
+//        spaceNavigationView = findViewById(R.id.space);
+//        spaceNavigationView.initWithSaveInstanceState(savedInstanceState);
+//        spaceNavigationView.addSpaceItem(new SpaceItem("", R.drawable.tab_home_unselected));
+//        spaceNavigationView.addSpaceItem(new SpaceItem("", R.drawable.tab_profile_unselected));
+//
+//        spaceNavigationView.setSpaceOnClickListener(new SpaceOnClickListener() {
+//            @Override
+//            public void onCentreButtonClick() {
+//                //跳转到创建直播的页面。
+//                Intent intent = new Intent(MainActivity.this, CreateLiveActivity.class);
+//                startActivity(intent);
+//            }
+//
+//            @Override
+//            public void onItemClick(int itemIndex, String itemName) {
+//                if (itemIndex == 0) {
+//                    replaceFragment(new LiveListFragment());
+//                }
+//
+//
+//                if (itemIndex == 1) {
+//                    replaceFragment(new EditProfileFragment());
+//                }
+//            }
+//
+//            @Override
+//            public void onItemReselected(int itemIndex, String itemName) {
+//
+//            }
+//
+//
+//        });
     }
 
     private void setTabs() {
@@ -43,44 +95,34 @@ public class MainActivity extends AppCompatActivity {
             mTabHost.getTabWidget().setDividerDrawable(null);
         }
 
-        {
-            TabHost.TabSpec profileTab = mTabHost.newTabSpec("createlive").setIndicator(getIndicator(R.drawable.tab_publish_live));
-            mTabHost.addTab(profileTab, null, null);
-            mTabHost.getTabWidget().setDividerDrawable(null);
-        }
 
         {
             TabHost.TabSpec profileTab = mTabHost.newTabSpec("profile").setIndicator(getIndicator(R.drawable.tab_profile));
             mTabHost.addTab(profileTab, EditProfileFragment.class, null);
             mTabHost.getTabWidget().setDividerDrawable(null);
         }
-
-        mTabHost.getTabWidget().getChildTabViewAt(1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toCreateLive();
-            }
-        });
-    }
-
-    private void toCreateLive() {
-        //跳转到创建直播的页面。
-        Intent intent = new Intent();
-        intent.setClass(this, CreateLiveActivity.class);
-        startActivity(intent);
     }
 
     private View getIndicator(int resId) {
         View tabView = LayoutInflater.from(this).inflate(R.layout.view_indicator, null);
-        ImageView tabImg = (ImageView) tabView.findViewById(R.id.tab_icon);
+        ImageView tabImg = tabView.findViewById(R.id.tab_icon);
         tabImg.setImageResource(resId);
         return tabView;
     }
 
     private void findAllViews() {
-        mContainer = (FrameLayout) findViewById(R.id.fragment_container);
-        mTabHost = (FragmentTabHost) findViewById(R.id.fragment_tabhost);
+        mContainer = findViewById(R.id.fragment_container);
+        mTabHost = findViewById(R.id.fragment_tabhost);
     }
+
+//    private void replaceFragment(Fragment fragment) {
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.fragment_container, fragment);
+//        fragmentTransaction.commit();
+//    }
+
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
@@ -93,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void exit() {
         if ((System.currentTimeMillis() - mExitTime) > 2000) {
-            Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(getApplicationContext(), "再按一次退出", TastyToast.LENGTH_LONG, TastyToast.WARNING);
             mExitTime = System.currentTimeMillis();
         } else {
             finish();

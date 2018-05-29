@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
 
 public class GiftRepeatView extends LinearLayout {

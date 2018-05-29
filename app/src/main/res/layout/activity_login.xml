@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@drawable/ic_background">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@android:color/white"
+        android:background="@android:color/transparent"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -19,17 +21,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="60dp"
-            android:layout_marginTop="30dp"
-            android:src="@mipmap/ic_xiaolu" />
+            android:layout_marginTop="15dp"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/yu" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="#3000" />
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingBottom="20dp"
@@ -41,17 +46,18 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:drawableLeft="@drawable/ic_account"/>
+                android:drawableLeft="@drawable/ic_account"
+                android:gravity="center" />
 
             <EditText
                 android:id="@+id/account"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
-                android:maxLines="1"
                 android:background="@android:color/transparent"
                 android:hint="用户名"
+                android:maxLines="1"
+
                 android:textColor="@android:color/black"
                 android:textColorHint="#ccc"
                 android:textSize="16sp" />
@@ -66,6 +72,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingBottom="20dp"
@@ -87,6 +94,7 @@
                 android:background="@android:color/transparent"
                 android:hint="密码"
                 android:inputType="textPassword"
+
                 android:textColor="@android:color/black"
                 android:textColorHint="#ccc"
                 android:textSize="16sp" />
@@ -112,8 +120,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            >
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/forget0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="154dp"
+                android:background="@android:color/transparent"
+                android:text=""
+                android:textColor="@android:color/holo_blue_dark" />
+
             <Button
                 android:id="@+id/register"
                 android:layout_width="wrap_content"
@@ -122,14 +139,8 @@
                 android:background="@android:color/transparent"
                 android:text="注册"
                 android:textColor="@android:color/holo_blue_dark" />
-            <Button
-                android:id="@+id/forget"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="154dp"
-                android:background="@android:color/transparent"
-                android:text="忘记密码？"
-                android:textColor="@android:color/holo_blue_dark" />
+
+
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

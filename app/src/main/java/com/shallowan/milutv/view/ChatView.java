@@ -18,7 +18,7 @@ import com.tencent.livesdk.ILVCustomCmd;
 import com.tencent.livesdk.ILVText;
 
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
 
 public class ChatView extends LinearLayout {

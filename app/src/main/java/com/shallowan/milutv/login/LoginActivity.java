@@ -1,25 +1,18 @@
 package com.shallowan.milutv.login;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.sdsmdg.tastytoast.TastyToast;
 import com.shallowan.milutv.MiluApplication;
 import com.shallowan.milutv.R;
 import com.shallowan.milutv.main.MainActivity;
-import com.shallowan.milutv.register.ForgetActivity;
-import com.shallowan.milutv.register.PhoneRegisterActivity;
 import com.shallowan.milutv.register.RegisterActivity;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMUserProfile;
@@ -27,12 +20,19 @@ import com.tencent.TIMValueCallBack;
 import com.tencent.ilivesdk.ILiveCallBack;
 import com.tencent.ilivesdk.core.ILiveLoginManager;
 
+import net.lemonsoft.lemonbubble.LemonBubble;
+
+import qiu.niorgai.StatusBarCompat;
+
+/**
+ * Created by ShallowAn.
+ */
+
 public class LoginActivity extends AppCompatActivity {
     private EditText mAccountEdt;
     private EditText mPasswordEdt;
     private Button mLoginBtn;
     private Button mRegisterBtn;
-    private Button mForgetBtn;
     private long mExitTime;
 
     @Override
@@ -40,29 +40,19 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        setSystemBar();
         findAllViews();
         setListeners();
+
+        StatusBarCompat.translucentStatusBar(this);
     }
 
-    //设置状态栏颜色
-    private void setSystemBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setNavigationBarTintEnabled(true);
-            tintManager.setTintColor(Color.LTGRAY);
-        }
-    }
 
     private void findAllViews() {
         mAccountEdt = (EditText) findViewById(R.id.account);
         mPasswordEdt = (EditText) findViewById(R.id.password);
         mLoginBtn = (Button) findViewById(R.id.login);
         mRegisterBtn = (Button) findViewById(R.id.register);
-        mForgetBtn = (Button) findViewById(R.id.forget);
+
     }
 
     private void setListeners() {
@@ -83,19 +73,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        mForgetBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                forget();
-            }
-        });
+//        mForgetBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                forget();
+//            }
+//        });
     }
 
-    private void forget() {
-        Intent intent = new Intent();
-        intent.setClass(this, ForgetActivity.class);
-        startActivity(intent);
-    }
+//    private void forget() {
+//        Intent intent = new Intent();
+//        intent.setClass(this, ForgetActivity.class);
+//        startActivity(intent);
+//    }
 
     private void register() {
         //跳转到注册页面
@@ -106,6 +96,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void login() {
+
+        LemonBubble.getRoundProgressBubbleInfo()
+                .setTitle("登录中...")
+                .show(LoginActivity.this);
+
         final String accountStr = mAccountEdt.getText().toString();
         String passwordStr = mPasswordEdt.getText().toString();
 
@@ -119,10 +114,15 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(String module, int errCode, String errMsg) {
+                Log.i("TAG", "登录失败");
+                //ld.close();
                 //登录失败
-                Toast.makeText(LoginActivity.this, "tls登录失败：" + errMsg, Toast.LENGTH_SHORT).show();
+                LemonBubble.hide();
+                TastyToast.makeText(getApplicationContext(), "登录失败：" + errMsg, TastyToast.LENGTH_LONG, TastyToast.ERROR);
+
             }
         });
+
     }
 
     private void loginLive(String accountStr, String data) {
@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Object data) {
                 //最终登录成功
-                Toast.makeText(LoginActivity.this, "登录成功！", Toast.LENGTH_SHORT).show();
+                LemonBubble.hide();
                 Intent intent = new Intent();
                 intent.setClass(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -143,9 +143,10 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(String module, int errCode, String errMsg) {
+                Log.i("TAG", "登录失败");
                 //登录失败
-                Toast.makeText(LoginActivity.this, "iLive登录失败：" + errMsg, Toast.LENGTH_SHORT).show();
-
+                LemonBubble.hide();
+                TastyToast.makeText(getApplicationContext(), "登录失败：" + errMsg, TastyToast.LENGTH_LONG, TastyToast.ERROR);
             }
         });
     }
@@ -154,7 +155,9 @@ public class LoginActivity extends AppCompatActivity {
         TIMFriendshipManager.getInstance().getSelfProfile(new TIMValueCallBack<TIMUserProfile>() {
             @Override
             public void onError(int i, String s) {
-                Toast.makeText(LoginActivity.this, "获取信息失败：" + s, Toast.LENGTH_SHORT).show();
+                LemonBubble.hide();
+                TastyToast.makeText(getApplicationContext(), "获取信息失败：" + s, TastyToast.LENGTH_LONG, TastyToast.ERROR);
+
             }
 
             @Override
@@ -164,6 +167,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
@@ -176,7 +180,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void exit() {
         if ((System.currentTimeMillis() - mExitTime) > 2000) {
-            Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(getApplicationContext(), "再按一次退出", TastyToast.LENGTH_LONG, TastyToast.WARNING);
             mExitTime = System.currentTimeMillis();
         } else {
             finish();

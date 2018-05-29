@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator.
+ * Created by ShallowAn.
  */
 
 public class ChatMsgListView extends RelativeLayout {
